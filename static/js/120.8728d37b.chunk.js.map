@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/120.8728d37b.chunk.js","mappings":"iIAQA,UARa,SAACA,GACV,OACI","sources":["components/News/News.jsx"],"sourcesContent":["const News = (props) => {\r\n    return (\r\n        <div>\r\n            News\r\n        </div>\r\n    )\r\n}\r\n\r\nexport default News\r\n"],"names":["props"],"sourceRoot":""}
