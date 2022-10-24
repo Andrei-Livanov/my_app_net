@@ -1,3 +1,23 @@
 .descriptionBlock {
     padding: 10px;
 }
+
+.mainPhoto {
+    max-width: 180px;
+}
+
+.avatar {
+    display: block;
+}
+
+.fullName {
+    margin: 5px 0;
+}
+
+.status {
+    margin-top: 10px;
+}
+
+.contact {
+    padding-left: 10px;
+}
