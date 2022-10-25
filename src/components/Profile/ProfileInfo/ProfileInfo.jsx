@@ -18,8 +18,8 @@ const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, savePro
         }
     }
 
-    const onSubmit =  (formData) => {
-         saveProfile(formData)
+    const onSubmit = (formData) => {
+        saveProfile(formData)
             .then(() => {
                 setEditMode(false);
             });
@@ -45,9 +45,6 @@ const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, savePro
 const ProfileData = ({profile, isOwner, goToEditMode}) => {
     return (
         <div>
-            {isOwner && <div>
-                <button onClick={goToEditMode}>Edit</button>
-            </div>}
             <div className={styles.fullName}>
                 <b>Full name</b>: {profile.fullName}
             </div>
@@ -68,6 +65,9 @@ const ProfileData = ({profile, isOwner, goToEditMode}) => {
                 return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
             })}
             </div>
+            {isOwner && <div className={styles.fullName}>
+                <button onClick={goToEditMode}>Edit</button>
+            </div>}
         </div>
     );
 }
