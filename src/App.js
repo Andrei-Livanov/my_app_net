@@ -1,26 +1,26 @@
-import React, {Component, Suspense, lazy} from 'react';
-import './App.css';
-import Navbar from './components/Navbar/Navbar';
-import {HashRouter, Route, Routes} from 'react-router-dom';
-import HeaderContainer from './components/Header/HeaderContainer';
-import {connect, Provider} from 'react-redux';
-import {compose} from 'redux';
-import {initializeApp} from './redux/app-reducer';
-import Preloader from './components/common/Preloader/Preloader';
-import {withRouter} from './hoc/withRoute';
-import store from './redux/redux-store';
+import React, {Component, Suspense, lazy} from 'react'
+import './App.css'
+import Navbar from './components/Navbar/Navbar'
+import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom'
+import HeaderContainer from './components/Header/HeaderContainer'
+import {connect, Provider} from 'react-redux'
+import {compose} from 'redux'
+import {initializeApp} from './redux/app-reducer'
+import Preloader from './components/common/Preloader/Preloader'
+import {withRouter} from './hoc/withRoute'
+import store from './redux/redux-store'
 
-const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'));
-const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'));
-const UsersContainer = lazy(() => import('./components/Users/UsersContainer'));
-const News = lazy(() => import('./components/News/News'));
-const Music = lazy(() => import('./components/Music/Music'));
-const Settings = lazy(() => import('./components/Settings/Settings'));
-const LoginPage = lazy(() => import('./components/Login/Login'));
+const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'))
+const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'))
+const UsersContainer = lazy(() => import('./components/Users/UsersContainer'))
+const News = lazy(() => import('./components/News/News'))
+const Music = lazy(() => import('./components/Music/Music'))
+const Settings = lazy(() => import('./components/Settings/Settings'))
+const LoginPage = lazy(() => import('./components/Login/Login'))
 
 class App extends Component {
     componentDidMount() {
-        this.props.initializeApp();
+        this.props.initializeApp()
     }
 
     render() {
@@ -43,11 +43,12 @@ class App extends Component {
                             <Route path='/music' element={<Music/>}/>
                             <Route path='/settings' element={<Settings/>}/>
                             <Route path='/login' element={<LoginPage/>}/>
+                            <Route path='/' element={<Navigate to='/profile'/>}/>
                         </Routes>
                     </Suspense>
                 </div>
             </div>
-        );
+        )
     }
 }
 
@@ -58,16 +59,16 @@ const mapStateToProps = (state) => ({
 const AppContainer = compose(
     withRouter,
     connect(mapStateToProps, {initializeApp}))
-(App);
+(App)
 
 const SamuraiJSApp = () => {
     return (
-        <HashRouter>
+        <BrowserRouter>
             <Provider store={store}>
                 <AppContainer/>
             </Provider>
-        </HashRouter>
-    );
+        </BrowserRouter>
+    )
 }
 
-export default SamuraiJSApp;
+export default SamuraiJSApp
