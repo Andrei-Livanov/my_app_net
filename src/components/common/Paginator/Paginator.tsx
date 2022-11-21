@@ -1,20 +1,29 @@
-import {useEffect, useState} from 'react';
-import styles from './Paginator.module.css';
-import cn from 'classnames';
+import React, {useEffect, useState} from 'react'
+import styles from './Paginator.module.css'
+import cn from 'classnames'
 
-const Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, portionSize = 10}) => {
-    const pagesCount = Math.ceil(totalItemsCount / pageSize);
+type PropsType = {
+    totalItemsCount: number
+    pageSize: number
+    currentPage: number
+    onPageChanged: (pageNumber: number) => void
+    portionSize?: number
+}
 
-    let pages = []
+const Paginator: React.FC<PropsType> = ({totalItemsCount, pageSize,
+                                        currentPage, onPageChanged, portionSize = 10}) => {
+    const pagesCount = Math.ceil(totalItemsCount / pageSize)
+
+    let pages: Array<number> = []
     for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i);
+        pages.push(i)
     }
 
-    const portionCount = Math.ceil(pagesCount / portionSize);
+    const portionCount = Math.ceil(pagesCount / portionSize)
     const [portionNumber, setPortionNumber] = useState(1)
     useEffect(() => setPortionNumber(Math.ceil(currentPage / portionSize)), [currentPage]);
-    const leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
-    const rightPortionPageNumber = portionNumber * portionSize;
+    const leftPortionPageNumber = (portionNumber - 1) * portionSize + 1
+    const rightPortionPageNumber = portionNumber * portionSize
 
     return (
         <div className={styles.paginator}>
@@ -31,14 +40,14 @@ const Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, porti
                               onClick={() => {
                                   onPageChanged(p)
                               }}>{p} </span>
-                    );
+                    )
                 })}
             {portionCount > portionNumber &&
                 <button onClick={() => {
                     setPortionNumber(portionNumber + 1)
                 }}>NEXT</button>}
         </div>
-    );
+    )
 }
 
-export default Paginator;
+export default Paginator
