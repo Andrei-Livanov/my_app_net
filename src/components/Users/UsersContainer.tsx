@@ -5,8 +5,7 @@ import Users from './Users'
 import Preloader from '../common/Preloader/Preloader'
 import {compose} from 'redux'
 import {
-    getCurrentPage, getFollowingInProgress,
-    getIsFetching, getPageSize, getTotalUsersCount, getUsers
+    getCurrentPage, getFollowingInProgress, getIsFetching, getPageSize, getTotalUsersCount, getUsers
 } from '../../redux/users-selectors'
 import {UserType} from '../../types/types'
 import {AppStateType} from '../../redux/redux-store'
@@ -72,7 +71,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     }
 }
 
-export default compose<React.Component<PropsType>>(
+export default compose(
     // TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState
     connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(
         mapStateToProps,
