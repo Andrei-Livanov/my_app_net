@@ -1,7 +1,7 @@
 import React, {Component, Suspense, lazy, FC} from 'react'
 import './App.css'
 import Navbar from './components/Navbar/Navbar'
-import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom'
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import HeaderContainer from './components/Header/HeaderContainer'
 import {connect, Provider} from 'react-redux'
 import {compose} from 'redux'
@@ -49,15 +49,16 @@ class App extends Component<MapPropsType & DispatchPropsType> {
                 <div className='app-wrapper-content'>
                     <Suspense fallback={<div><Preloader/></div>}>
                         <Routes>
-                            <Route path='/profile/:userId' element={<ProfileContainer/>}/>
-                            <Route path='/profile' element={<ProfileContainer/>}/>
+                            <Route path='/' element={<ProfileContainer/>}/>
+                            <Route path='/profile' element={<ProfileContainer/>}>
+                                <Route path=':userId' element={<ProfileContainer/>}/>
+                            </Route>
                             <Route path='/dialogs/*' element={<DialogsContainer/>}/>
                             <Route path='/users' element={<UsersContainer pageTitle={'Samurai'}/>}/>
                             <Route path='/news' element={<News/>}/>
                             <Route path='/music' element={<Music/>}/>
                             <Route path='/settings' element={<Settings/>}/>
                             <Route path='/login' element={<LoginPage/>}/>
-                            <Route path='/' element={<Navigate to='/profile'/>}/>
                         </Routes>
                     </Suspense>
                 </div>
