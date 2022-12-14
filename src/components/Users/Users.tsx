@@ -2,20 +2,14 @@ import React, {FC, useEffect} from 'react'
 import Paginator from '../common/Paginator/Paginator'
 import User from './User'
 import {UsersSearchForm} from './UsersSearchForm'
-import {FilterType, requestUsers} from '../../redux/users-reducer'
+import {FilterType, follow, requestUsers, unfollow} from '../../redux/users-reducer'
 import {useDispatch, useSelector} from 'react-redux'
 import {
-    getCurrentPage,
-    getFollowingInProgress,
-    getPageSize,
-    getTotalUsersCount,
-    getUsers,
-    getUsersFilter
+    getCurrentPage, getFollowingInProgress, getPageSize, getTotalUsersCount, getUsers, getUsersFilter
 } from '../../redux/users-selectors'
+import {useLocation, useNavigate} from 'react-router-dom'
 
-type PropsType = {}
-
-export const Users: FC<PropsType> = (props) => {
+export const Users: FC = () => {
     const users = useSelector(getUsers)
     const totalUsersCount = useSelector(getTotalUsersCount)
     const currentPage = useSelector(getCurrentPage)
@@ -24,10 +18,55 @@ export const Users: FC<PropsType> = (props) => {
     const followingInProgress = useSelector(getFollowingInProgress)
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const location = useLocation()
+
+    type QueryType = { term?: string, friend?: string, page?: string }
 
     useEffect(() => {
-        dispatch(requestUsers(currentPage, pageSize, filter))
+        const search = new URLSearchParams(location.search)
+
+        let actualPage = currentPage
+        let actualFilter = filter
+
+        if (search.get('page')) {
+            actualPage = Number(search.get('page'))
+        }
+
+        if (search.get('term')) {
+            actualFilter = {...actualFilter, term: search.get('term') as string}
+        }
+
+        if (search.get('friend')) {
+            actualFilter = {
+                ...actualFilter,
+                friend: search.get('friend') === 'null' ? null : search.get('friend') === 'true'
+            }
+        }
+
+        dispatch(requestUsers(actualPage, pageSize, actualFilter))
     }, [])
+
+    useEffect(() => {
+        const query: QueryType = {}
+
+        if (filter.term) {
+            query.term = filter.term
+        }
+
+        if (filter.friend !== null) {
+            query.friend = String(filter.friend)
+        }
+
+        if (currentPage !== 1) {
+            query.page = String(currentPage)
+        }
+
+        navigate({
+            pathname: '/users',
+            search: new URLSearchParams(query).toString()
+        })
+    }, [filter, currentPage])
 
     const onPageChanged = (pageNumber: number) => {
         dispatch(requestUsers(pageNumber, pageSize, filter))
@@ -37,11 +76,11 @@ export const Users: FC<PropsType> = (props) => {
         dispatch(requestUsers(1, pageSize, filter))
     }
 
-    const follow = (userId: number) => {
+    const _follow = (userId: number) => {
         dispatch(follow(userId))
     }
 
-    const unfollow = (userId: number) => {
+    const _unfollow = (userId: number) => {
         dispatch(unfollow(userId))
     }
 
@@ -55,8 +94,8 @@ export const Users: FC<PropsType> = (props) => {
                     users.map(u => <User key={u.id}
                                          user={u}
                                          followingInProgress={followingInProgress}
-                                         follow={follow}
-                                         unfollow={unfollow}/>
+                                         follow={_follow}
+                                         unfollow={_unfollow}/>
                     )
                 }
             </div>
