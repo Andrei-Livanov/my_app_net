@@ -9,19 +9,20 @@ import {
 } from '../../redux/users-selectors'
 import {useLocation, useNavigate} from 'react-router-dom'
 
+type QueryParamsType = { term?: string; friend?: string; page?: string }
+
 export const Users: FC = () => {
     const users = useSelector(getUsers)
     const totalUsersCount = useSelector(getTotalUsersCount)
     const currentPage = useSelector(getCurrentPage)
     const pageSize = useSelector(getPageSize)
     const filter = useSelector(getUsersFilter)
-    const followingInProgress = useSelector(getFollowingInProgress)
 
+    const followingInProgress = useSelector(getFollowingInProgress)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const location = useLocation()
 
-    type QueryType = { term?: string, friend?: string, page?: string }
+    const location = useLocation()
 
     useEffect(() => {
         const search = new URLSearchParams(location.search)
@@ -48,7 +49,7 @@ export const Users: FC = () => {
     }, [])
 
     useEffect(() => {
-        const query: QueryType = {}
+        const query: QueryParamsType = {}
 
         if (filter.term) {
             query.term = filter.term
@@ -63,7 +64,7 @@ export const Users: FC = () => {
         }
 
         navigate({
-            pathname: '/users',
+            pathname: '/developers',
             search: new URLSearchParams(query).toString()
         })
     }, [filter, currentPage])

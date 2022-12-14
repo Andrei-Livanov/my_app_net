@@ -3,30 +3,25 @@ import styles from './Navbar.module.css'
 import {NavLink} from 'react-router-dom'
 
 const Navbar: FC = () => {
-    const selectFontColor = () => (link: { isActive: any }) => link.isActive ? styles.active : styles.item
-
     return (
         <nav className={styles.nav}>
-            <div>
-                <NavLink to='/profile' className={selectFontColor()}>Profile</NavLink>
+            <div className={styles.item}>
+                <NavLink to='/profile' className={styles.activeLink}>Profile</NavLink>
             </div>
-            <div>
-                <NavLink to='/dialogs'
-                         className={selectFontColor()}>Massages</NavLink>
+            <div className={`${styles.item} ${styles.activeLink}`}>
+                <NavLink to='/dialogs' className={styles.active}>Massages</NavLink>
             </div>
-            <div>
-                <NavLink to='/users'
-                         className={selectFontColor()}>Users</NavLink>
+            <div className={`${styles.item} ${styles.activeLink}`}>
+                <NavLink to='/users' className={styles.activeLink}>Users</NavLink>
             </div>
-            <div>
-                <NavLink to='/news' className={selectFontColor()}>News</NavLink>
+            <div className={styles.item}>
+                <NavLink to='/news'>News</NavLink>
             </div>
-            <div>
-                <NavLink to='/music' className={selectFontColor()}>Music</NavLink>
+            <div className={styles.item}>
+                <NavLink to='/music'>Music</NavLink>
             </div>
-            <div>
-                <NavLink to='/settings'
-                         className={selectFontColor()}>Settings</NavLink>
+            <div className={styles.item}>
+                <NavLink to='/settings'>Settings</NavLink>
             </div>
         </nav>
     )
