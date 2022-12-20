@@ -18,6 +18,7 @@ const {Content, Footer, Sider} = Layout
 const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'))
 const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'))
 const UsersContainer = lazy(() => import('./components/Users/UsersContainer'))
+const ChatPage = lazy(()=> import('./pages/Chat/ChatPage'))
 const News = lazy(() => import('./components/News/News'))
 const Music = lazy(() => import('./components/Music/Music'))
 const Settings = lazy(() => import('./components/Settings/Settings'))
@@ -60,11 +61,11 @@ class App extends Component<MapPropsType & DispatchPropsType> {
                         <Sider className="site-layout-background" width={200}>
                             <Menu
                                 mode="inline"
-                                  /*defaultSelectedKeys={['7']}*/
-                                  /*defaultOpenKeys={['sub1']}*/
+                                /*defaultSelectedKeys={['7']}*/
+                                /*defaultOpenKeys={['sub1']}*/
                                 style={{height: '100%'}}
                             >
-                                <SubMenu key="sub1" icon={<UserOutlined/>} title="My Profile">
+                                <SubMenu key="sub1" icon={<UserOutlined/>} title="My profile">
                                     <Menu.Item key="1"><Link to='/profile'>Profile</Link></Menu.Item>
                                     <Menu.Item key="2"><Link to='/dialogs'>Massages</Link></Menu.Item>
                                     <Menu.Item key="3">option3</Menu.Item>
@@ -76,8 +77,8 @@ class App extends Component<MapPropsType & DispatchPropsType> {
                                     <Menu.Item key="7">option7</Menu.Item>
                                     <Menu.Item key="8">option8</Menu.Item>
                                 </SubMenu>
-                                <SubMenu key="sub3" icon={<NotificationOutlined/>} title="subnav 3">
-                                    <Menu.Item key="9">option9</Menu.Item>
+                                <SubMenu key="sub3" icon={<NotificationOutlined/>} title="Chat">
+                                    <Menu.Item key="9"><Link to='/chat'>Chat</Link></Menu.Item>
                                     <Menu.Item key="10">option10</Menu.Item>
                                     <Menu.Item key="11">option11</Menu.Item>
                                     <Menu.Item key="12">option12</Menu.Item>
@@ -93,6 +94,7 @@ class App extends Component<MapPropsType & DispatchPropsType> {
                                     </Route>
                                     <Route path='/dialogs/*' element={<DialogsContainer/>}/>
                                     <Route path='/developers' element={<UsersContainer pageTitle={'Samurai'}/>}/>
+                                    <Route path='/chat' element={<ChatPage/>}/>
                                     <Route path='/news' element={<News/>}/>
                                     <Route path='/music' element={<Music/>}/>
                                     <Route path='/settings' element={<Settings/>}/>
@@ -104,15 +106,8 @@ class App extends Component<MapPropsType & DispatchPropsType> {
                         </Content>
                     </Layout>
                 </Content>
-                <Footer style={{textAlign: 'center'}}>Social Network ©2022</Footer>
+                <Footer style={{textAlign: 'center'}}>Social Network ©2022 Created by IT-K</Footer>
             </Layout>
-            /*<div className='app-wrapper'>
-                <HeaderContainer/>
-                <Navbar/>
-                <div className='app-wrapper-content'>
-
-                </div>
-            </div>*/
         )
     }
 }

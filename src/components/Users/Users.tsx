@@ -77,11 +77,11 @@ export const Users: FC = () => {
         dispatch(requestUsers(1, pageSize, filter))
     }
 
-    const _follow = (userId: number) => {
+    const followCallback = (userId: number) => {
         dispatch(follow(userId))
     }
 
-    const _unfollow = (userId: number) => {
+    const unfollowCallback = (userId: number) => {
         dispatch(unfollow(userId))
     }
 
@@ -95,8 +95,8 @@ export const Users: FC = () => {
                     users.map(u => <User key={u.id}
                                          user={u}
                                          followingInProgress={followingInProgress}
-                                         follow={_follow}
-                                         unfollow={_unfollow}/>
+                                         follow={followCallback}
+                                         unfollow={unfollowCallback}/>
                     )
                 }
             </div>
